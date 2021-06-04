@@ -5,7 +5,7 @@ describe('startServer', () => {
   let server: FastifyInstance = undefined as any;
 
   beforeAll(async () => {
-    server = await startServer({ logger: true });
+    server = await startServer({ logger: false });
   });
 
   afterAll(async () => {
