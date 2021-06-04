@@ -3,12 +3,14 @@ import cors from 'fastify-cors';
 import swagger from 'fastify-swagger';
 import { helloRoutes } from './routes';
 
-const PORT = process.env.PORT ?? 3000;
-const ADDRESS = '127.0.0.1';
 const swaggerConfig = {};
 
-export const startServer = async (config = { logger: true }) => {
-  const server = fastify(config);
+export const startServer = async ({
+  logger = true,
+  port = process.env.PORT ?? 5000,
+  address = '127.0.0.1',
+} = {}) => {
+  const server = fastify({ logger });
 
   server.register(cors);
   server.register(swagger, swaggerConfig);
@@ -16,7 +18,7 @@ export const startServer = async (config = { logger: true }) => {
   server.register(helloRoutes);
 
   try {
-    await server.listen(PORT, ADDRESS, (err, host) => {
+    await server.listen(port, address, (err, host) => {
       server.log.info(`Server listening at ${host} 🚀`);
     });
   } catch (err) {
