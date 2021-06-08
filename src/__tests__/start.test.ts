@@ -1,26 +1,20 @@
+import supertest from 'supertest';
 import tap from 'tap';
-// import { FastifyInstance } from 'fastify';
-import { startServer } from '../start';
+import { buildFastify } from '../start';
 
-tap.test('startServer', async (t) => {
-  t.plan(4);
+tap.test('GET `/` route', async (t) => {
+  const fastify = buildFastify({ logger: false });
 
-  const fastify = await startServer({ logger: false });
-
-  t.teardown(async () => (await fastify.close()) as any);
+  t.teardown(() => {
+    fastify.close();
+  });
 
   await fastify.ready();
 
-  fastify.inject(
-    {
-      method: 'GET',
-      url: '/',
-    },
-    (err, response) => {
-      t.error(err);
-      t.equal(response.statusCode, 200);
-      t.equal(response.headers['content-type'], 'application/json; charset=utf-8');
-      t.same(response.json(), { hello: 'world' });
-    },
-  );
+  const response = await supertest(fastify.server)
+    .get('/')
+    .expect(200)
+    .expect('Content-Type', 'application/json; charset=utf-8');
+
+  t.same(response.body, { hello: 'world' });
 });
