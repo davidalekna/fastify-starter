@@ -7,11 +7,10 @@
     "dev": "nodemon --quiet",
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -b",
-    "prepare": "husky install",
     "test": "tap --node-arg=\"-r\" --node-arg=\"ts-node/register\"",
     "test:watch": "npm run test --watch",
-    "test:watch:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --watchAll --runInBand",
-    "test:coverage": "npm run test -- --coverage",
+    "jest:test:watch:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --watchAll --runInBand",
+    "jest:test:coverage": "npm run test -- --coverage",
     "format": "prettier --write \"**/*.+(ts|js|json|md|mdx)\"",
     "lint": "echo setup eslint",
     "validate": "npm-run-all --parallel test:coverage lint"
