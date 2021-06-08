@@ -3,7 +3,6 @@
     "rootDir": "src",
     "outDir": "./dist",
     "target": "ESNext",
-    "module": "CommonJS",
     "moduleResolution": "node",
     "lib": ["es2018"],
     "declaration": false,
@@ -12,7 +11,7 @@
     "strictNullChecks": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": false,
@@ -20,9 +19,10 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "allowSyntheticDefaultImports": true,
-    "typeRoots": ["./node_modules/@types"]
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowJs": false
   },
   "include": ["./src"],
-  "exclude": ["./dist", "node_modules"]
+  "exclude": ["./dist", "node_modules", "./test-config"]
 }
