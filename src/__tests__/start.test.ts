@@ -7,7 +7,7 @@ tap.test('startServer', async (t) => {
 
   const fastify = await startServer({ logger: false });
 
-  // t.teardown(() => fastify.close());
+  t.teardown(async () => (await fastify.close()) as any);
 
   await fastify.ready();
 
