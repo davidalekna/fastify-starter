@@ -12,9 +12,9 @@ tap.test('GET `/` route', async (t) => {
   await fastify.ready();
 
   const response = await supertest(fastify.server)
-    .get('/')
+    .get('/v1')
     .expect(200)
     .expect('Content-Type', 'application/json; charset=utf-8');
 
-  t.same(response.body, { hello: 'world' });
+  t.same(response.body, { ok: 'ok' });
 });
