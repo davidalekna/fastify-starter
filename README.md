@@ -21,3 +21,5 @@ test
 ```
 npm t
 ```
+
+`NOTE: please use named exports only, it works better with intellisense and renaming`

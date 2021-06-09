@@ -2,7 +2,7 @@ import fastify, { FastifyInstance } from 'fastify';
 import cors from 'fastify-cors';
 import swagger from 'fastify-swagger';
 import swaggerConfig from './configs/swagger.config.json';
-import { initRoutes } from './routes/v1';
+import { registerRoutes } from './routes/v1/register';
 
 export const buildFastify = ({ logger = true } = {}): FastifyInstance => {
   const server: FastifyInstance = fastify({ logger });
@@ -14,7 +14,7 @@ export const buildFastify = ({ logger = true } = {}): FastifyInstance => {
     reply.redirect('/docs/json');
   });
 
-  server.register(initRoutes, { prefix: '/v1' });
+  server.register(registerRoutes, { prefix: '/v1' });
 
   return server;
 };
