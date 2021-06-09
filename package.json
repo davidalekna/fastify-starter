@@ -5,12 +5,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --quiet",
+    "dev:debug": "nodemon --exec 'node --inspect=0.0.0.0:9229 --require ts-node/register src/index.ts'",
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -b",
     "test": "tap --node-arg=\"-r\" --node-arg=\"ts-node/register\"",
     "test:watch": "npm run test --watch",
-    "jest:test:watch:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --watchAll --runInBand",
-    "jest:test:coverage": "npm run test -- --coverage",
     "format": "prettier --write \"**/*.+(ts|js|json|md|mdx)\"",
     "lint": "echo setup eslint",
     "validate": "npm-run-all --parallel test:coverage lint"

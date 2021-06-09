@@ -1,15 +1,18 @@
 import fastify, { FastifyInstance } from 'fastify';
 import cors from 'fastify-cors';
 import swagger from 'fastify-swagger';
+import swaggerConfig from './configs/swagger.config.json';
 import { helloRoutes } from './routes';
-
-const swaggerConfig = {};
 
 export const buildFastify = ({ logger = true } = {}): FastifyInstance => {
   const server: FastifyInstance = fastify({ logger });
 
   server.register(cors);
   server.register(swagger, swaggerConfig);
+
+  server.get('/v1/openapi3.json', { schema: { hide: true } }, (request, reply) => {
+    reply.redirect('/docs/json');
+  });
 
   server.register(helloRoutes);
 
@@ -23,9 +26,7 @@ export const startServer = async ({
   const server = buildFastify({ logger });
 
   try {
-    await server.listen(port, (err, host) => {
-      server.log.info(`Server listening at ${host} 🚀`);
-    });
+    await server.listen(port);
 
     return server;
   } catch (err) {

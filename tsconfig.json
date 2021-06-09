@@ -4,7 +4,7 @@
     "outDir": "./dist",
     "target": "ESNext",
     "moduleResolution": "node",
-    "lib": ["es2018"],
+    "lib": ["ES2018"],
     "declaration": false,
     "strict": false,
     "noImplicitAny": true,
@@ -21,8 +21,9 @@
     "strictPropertyInitialization": false,
     "module": "commonjs",
     "esModuleInterop": true,
-    "allowJs": false
+    "allowJs": false,
+    "resolveJsonModule": true
   },
-  "include": ["./src"],
-  "exclude": ["./dist", "node_modules", "./test-config"]
+  "include": ["src/**/*"],
+  "exclude": ["./dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
 }
