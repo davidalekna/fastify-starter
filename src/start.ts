@@ -1,20 +1,25 @@
 import fastify, { FastifyInstance } from 'fastify';
 import cors from 'fastify-cors';
 import swagger from 'fastify-swagger';
-import swaggerConfig from './configs/swagger.config.json';
-import { registerRoutes } from './routes/v1/register';
+import { swaggerConfig } from './configs';
+import { routes } from './routes/v1/register';
 
 export const buildFastify = ({ logger = true } = {}): FastifyInstance => {
   const server: FastifyInstance = fastify({ logger });
 
   server.register(cors);
-  server.register(swagger, swaggerConfig);
+  server.register(swagger, swaggerConfig());
 
   server.get('/v1/openapi3.json', { schema: { hide: true } }, (request, reply) => {
     reply.redirect('/docs/json');
   });
 
-  server.register(registerRoutes, { prefix: '/v1' });
+  server.register(routes, { prefix: '/v1' });
+
+  server.ready((err) => {
+    if (err) throw err;
+    server.swagger();
+  });
 
   return server;
 };

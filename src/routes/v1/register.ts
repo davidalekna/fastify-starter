@@ -1,7 +1,9 @@
+import { RouteSchemaOptions } from 'declarations';
 import { FastifyInstance } from 'fastify';
+import { ok } from './ok';
 
-export const registerRoutes = async (fastify: FastifyInstance, options: { prefix: string }) => {
-  fastify.get('/', async (request, reply) => {
-    return { ok: 'ok' };
-  });
+const allRoutes: RouteSchemaOptions[] = [ok];
+
+export const routes = async (fastify: FastifyInstance, options: { prefix: string }) => {
+  allRoutes.forEach((route) => fastify.route(route));
 };
