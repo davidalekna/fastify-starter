@@ -1,6 +1,6 @@
-import { RouteSchemaOptions } from 'declarations';
+import { RouteOptions } from 'fastify';
 
-export const ok: RouteSchemaOptions = {
+export const ok: RouteOptions = {
   method: 'GET',
   url: '/',
   schema: {

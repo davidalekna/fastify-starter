@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "prestart": "npm run build",
     "start": "node ./dist",
     "dev": "nodemon --quiet",
     "dev:debug": "nodemon --exec 'node --inspect=0.0.0.0:9229 --require ts-node/register src/index.ts'",
