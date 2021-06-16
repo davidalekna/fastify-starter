@@ -3,7 +3,11 @@ import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { switchMap, catchError, retryWhen } from 'rxjs/operators';
 
-export const users$ = fromFetch('https://jsonplaceholder.typicode.com/users').pipe(
+export const jsonplaceholderInstance$ = (endpoint: string, settings?: RequestInit | undefined) => {
+  return fromFetch(`https://jsonplaceholder.typicode.com/${endpoint}`, settings);
+};
+
+export const users$ = jsonplaceholderInstance$('users').pipe(
   switchMap((response) => {
     if (response.ok) {
       // OK return data
