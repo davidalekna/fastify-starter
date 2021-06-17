@@ -1,5 +1,7 @@
 import { RouteOptions } from 'fastify';
-import { users$ } from '../../sources/jsonplaceholder';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { listUsers$, listTodos$ } from '../../sources/jsonplaceholder';
 
 // todo add address object and company object to the response scheme
 
@@ -22,6 +24,22 @@ export const users: RouteOptions = {
     },
   },
   handler: (request, reply) => {
-    users$.subscribe((result) => reply.send(result));
+    const usersPipeline = combineLatest([listUsers$, listTodos$]).pipe(
+      map(([users, todos]) => {
+        return users.map((user) => ({
+          ...user,
+          todos: todos.filter((todo) => todo.userId === user.id),
+        }));
+      }),
+    );
+
+    usersPipeline.subscribe({
+      next: (result) => reply.send(result),
+      error: (error) => {
+        request.log.info(`Error: ${error}`);
+        reply.status(401);
+        throw new Error('error in the response from services');
+      },
+    });
   },
 };
