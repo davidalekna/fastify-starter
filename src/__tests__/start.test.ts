@@ -13,6 +13,7 @@ tap.test('GET `/` route', async (t) => {
 
   const response = await supertest(fastify.server)
     .get('/v1')
+    .set({ Authorization: 'Bearer a-super-secret-key', Accept: 'application/json' })
     .expect(200)
     .expect('Content-Type', 'application/json; charset=utf-8');
 
