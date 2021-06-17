@@ -29,6 +29,7 @@ export const userSchemaConstructor = (overrides = {}) => {
 
 const UserRecord = userSchemaConstructor();
 
+// typescript types
 export type User = Static<typeof UserRecord>;
 
 export const TodoRecord = Type.Object({
@@ -38,8 +39,10 @@ export const TodoRecord = Type.Object({
   completed: Type.String(),
 });
 
+// typescript types
 export type Todo = Static<typeof TodoRecord>;
 
 const UserRecordWithTodos = userSchemaConstructor({ todos: Type.Array(TodoRecord) });
 
+// fastify schema
 export const UsersSchema = Type.Array(UserRecordWithTodos);
