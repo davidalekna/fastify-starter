@@ -1,9 +1,9 @@
 import { FastifyInstance, RouteOptions } from 'fastify';
 import { registerAuth } from '../../utils/auth';
 import { ok } from './ok';
-import { users } from './users';
+import { listUsers } from './user';
 
-const allRoutes: RouteOptions[] = [ok, users];
+const allRoutes: RouteOptions[] = [ok, listUsers];
 
 export const routes = async (fastify: FastifyInstance) => {
   registerAuth(fastify);

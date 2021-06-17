@@ -1,26 +1,17 @@
 import { RouteOptions } from 'fastify';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { listUsers$, listTodos$ } from '../../sources/jsonplaceholder';
+import { listUsers$, listTodos$, UsersSchema } from '../../../sources/jsonplaceholder';
 
-// todo add address object and company object to the response scheme
+// NOTE: there is a way to have a unified fastify + typescript type using this library
+// https://www.npmjs.com/package/@sinclair/typebox
 
-export const users: RouteOptions = {
+export const listUsers: RouteOptions = {
   method: 'GET',
   url: '/users',
   schema: {
     response: {
-      200: {
-        type: 'array',
-        properties: {
-          id: { type: 'string' },
-          name: { type: 'string' },
-          username: { type: 'string' },
-          email: { type: 'string' },
-          phone: { type: 'string' },
-          website: { type: 'string' },
-        },
-      },
+      200: UsersSchema,
     },
   },
   handler: (request, reply) => {
@@ -37,7 +28,7 @@ export const users: RouteOptions = {
       next: (result) => reply.send(result),
       error: (error) => {
         request.log.info(`Error: ${error}`);
-        reply.status(401);
+        reply.status(403);
         throw new Error('error in the response from services');
       },
     });
