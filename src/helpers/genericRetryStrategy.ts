@@ -2,7 +2,7 @@ import { FetchError } from 'node-fetch';
 import { Observable, throwError, timer } from 'rxjs';
 import { mergeMap, finalize } from 'rxjs/operators';
 
-type GenericRetryStrategyProps = {
+type Props = {
   maxRetryAttempts?: number;
   scalingDuration?: number;
   excludedStatusCodes?: number[];
@@ -12,7 +12,7 @@ export const genericRetryStrategy = ({
   maxRetryAttempts = 3,
   scalingDuration = 2000,
   excludedStatusCodes = [404, 500],
-}: GenericRetryStrategyProps = {}) => {
+}: Props = {}) => {
   return (attempts: Observable<FetchError>) => {
     return attempts.pipe(
       mergeMap((error, i) => {

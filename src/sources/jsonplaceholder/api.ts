@@ -1,11 +1,13 @@
 import { genericRetryStrategy } from '../../helpers';
 import { Observable, of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { switchMap, catchError, retryWhen } from 'rxjs/operators';
+import { switchMap, catchError, retryWhen, timeout } from 'rxjs/operators';
 import { Todo, User } from './types';
 
+const URI = 'https://jsonplaceholder.typicode.com';
+
 export const jsonplaceholderInstance$ = (endpoint: string, settings?: RequestInit | undefined) => {
-  return fromFetch(`https://jsonplaceholder.typicode.com/${endpoint}`, settings);
+  return fromFetch(`${URI}/${endpoint}`, settings).pipe(timeout(15000));
 };
 
 export const listUsers$: Observable<User[]> = jsonplaceholderInstance$('users').pipe(
