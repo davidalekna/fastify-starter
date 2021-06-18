@@ -11,16 +11,20 @@ export const listUsers: RouteOptions = {
       Authorization: { type: 'string' },
     },
     response: {
-      200: UsersSchema,
+      200: {
+        items: UsersSchema,
+      },
     },
   },
   handler: (request, reply) => {
     const pipeline = combineLatest([listUsers$, listTodos$]).pipe(
       map(([users, todos]) => {
-        return users.map((user) => ({
-          ...user,
-          todos: todos.filter((todo) => todo.userId === user.id),
-        }));
+        return {
+          items: users.map((user) => ({
+            ...user,
+            todos: todos.filter((todo) => todo.userId === user.id),
+          })),
+        };
       }),
     );
 
